@@ -35,7 +35,8 @@ const addTask = (e) => {
   //append LI to UL
   taskList.appendChild(li);
 
-  console.log(li);
+  // clear input
+  taskInput.value = "";
 };
 
 //load all event listners
