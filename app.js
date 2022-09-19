@@ -10,6 +10,9 @@ const loadEventListeners = () => {
   // Add Task event
 
   form.addEventListener("submit", addTask);
+
+  //Remove Task Event
+  taskList.addEventListener("click", removeTask);
 };
 
 //Add Task
@@ -37,6 +40,12 @@ const addTask = (e) => {
 
   // clear input
   taskInput.value = "";
+};
+
+const removeTask = (e) => {
+  if (e.target.parentElement.classList.contains("delete-item")) {
+    e.target.parentElement.parentElement.remove();
+  }
 };
 
 //load all event listners
