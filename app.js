@@ -13,6 +13,9 @@ const loadEventListeners = () => {
 
   //Remove Task Event
   taskList.addEventListener("click", removeTask);
+
+  //Clear all tasks
+  clearBtn.addEventListener("click", clearTasks);
 };
 
 //Add Task
@@ -47,6 +50,16 @@ const removeTask = (e) => {
     if (confirm("Are you sure?")) {
       e.target.parentElement.parentElement.remove();
     }
+  }
+};
+
+//Clear Tasks
+const clearTasks = () => {
+  // taskList.innerHTML = "";
+
+  //Faster way
+  while (taskList.firstChild) {
+    taskList.removeChild(taskList.firstChild);
   }
 };
 
