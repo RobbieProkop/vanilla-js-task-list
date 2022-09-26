@@ -7,8 +7,10 @@ const filter = document.getElementById("filter");
 const taskInput = document.getElementById("task");
 
 const loadEventListeners = () => {
-  // Add Task event
+  //DOm Load Event
+  document.addEventListener("DOMContentLoaded", getTasks);
 
+  // Add Task event
   form.addEventListener("submit", addTask);
 
   //Remove Task Event
@@ -19,6 +21,33 @@ const loadEventListeners = () => {
 
   // FIlter tasks
   filter.addEventListener("keyup", filterTasks);
+};
+
+//Get Tasks from LS
+const getTasks = () => {
+  let tasks = [];
+  if (localStorage.getItem("tasks") !== null) {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
+
+  tasks.forEach((task) => {
+    //Create LI element
+    const li = document.createElement("li");
+    //Add Class
+    li.className = "collection-item";
+    //create text-node and append to li
+    li.appendChild(document.createTextNode(task));
+    //create new link element for X delete
+    const link = document.createElement("a");
+    //Add CLass
+    link.className = "delete-item secondary-content";
+    //Add Icon HTML
+    link.innerHTML = '<i class="fa fa-remove"></i>';
+    //Append link to LI
+    li.appendChild(link);
+    //append LI to UL
+    taskList.appendChild(li);
+  });
 };
 
 //Add Task
@@ -62,13 +91,31 @@ const storeTaskInLocalStorage = (task) => {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 };
 
-// REmove Task
+// Remove Task
 const removeTask = (e) => {
   if (e.target.parentElement.classList.contains("delete-item")) {
     if (confirm("Are you sure?")) {
       e.target.parentElement.parentElement.remove();
+
+      // Remove from LS
+      removeTaskFromLocalStorage(e.target.parentElement.parentElement);
     }
   }
+};
+
+//Remove from LS
+const removeTaskFromLocalStorage = (taskItem) => {
+  let tasks = [];
+  if (localStorage.getItem("tasks") !== null) {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
+
+  tasks.forEach((task, index) => {
+    if (taskItem.textContent === task) {
+      tasks.splice(index, 1);
+    }
+  });
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 };
 
 //Clear Tasks
