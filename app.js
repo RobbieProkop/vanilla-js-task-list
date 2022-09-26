@@ -126,8 +126,15 @@ const clearTasks = () => {
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }
+
+  //CLear from LS
+  clearTasksFromLocalStorage();
 };
 
+//Clear Tasks from LS
+const clearTasksFromLocalStorage = () => {
+  localStorage.clear();
+};
 //Filter Tasks
 const filterTasks = (e) => {
   const text = e.target.value.toLowerCase();
