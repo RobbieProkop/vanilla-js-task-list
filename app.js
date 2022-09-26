@@ -44,10 +44,25 @@ const addTask = (e) => {
   //append LI to UL
   taskList.appendChild(li);
 
+  // store to localStorage
+  storeTaskInLocalStorage(taskInput.value);
+
   // clear input
   taskInput.value = "";
 };
 
+//Store to local Storage function
+const storeTaskInLocalStorage = (task) => {
+  let tasks = [];
+  if (localStorage.getItem("tasks") !== null) {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
+  tasks.push(task);
+
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+};
+
+// REmove Task
 const removeTask = (e) => {
   if (e.target.parentElement.classList.contains("delete-item")) {
     if (confirm("Are you sure?")) {
